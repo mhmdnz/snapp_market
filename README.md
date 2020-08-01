@@ -55,19 +55,6 @@ $ Create Database snappmarket
 $ php artisan migrate --seed
 ```
 
-### Add laravel schedules to your cronjobs
-
-```sh
-$ crontab -e
-
-//add folowing line to your crontab, Do not Forget to change the path of your project
-
-* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
-```
-
-> this Schedule will run all the commands that I have designed for the project ,<br> For instance ,
-> it will run the addStockCommand which will increase the amount of zero ingredients stock every 15 minutes  
-
 ### Run Tests
 
 ```sh
