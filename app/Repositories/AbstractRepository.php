@@ -18,7 +18,7 @@ class AbstractRepository
 
     public function getAllWith(array $relations)
     {
-        return $this->model->with(['products'])->paginate(15);
+        return $this->model->with($relations)->paginate(15);
     }
 
     public function get($id)

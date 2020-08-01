@@ -13,6 +13,7 @@ The Application is wrriten on Laravel, if you are not familier with the environm
   - [Run DB migrations](#Run-DB-migrations)
   - [Add laravel schedules to your cronjobs](#Add-laravel-schedules-to-your-cronjobs)
   - [Run Tests](#Run-Tests)
+  - [Check Swagger.yml](#Check-Swagger.yml)
   
 ## Docker
 - [Docker](#Docker-Installation-Guid)
@@ -69,6 +70,12 @@ $ ./vendor/bin/phpunit
 $ phpunit /address of the test
 ```
 
+### Check Swagger.ym
+
+> API's documentation, swagger file is also available on the root of the project<br>
+> notice that , its just a simple swagger and not so accurate, and it takes more time to make it more usable
+
+
 # Docker Installation Guid
 
   - [Clone project from Git repository](https://github.com/mhmdnz/snapp_market.git)
@@ -94,7 +101,7 @@ $ docker exec -it php sh /tmp/ComposerInstall.sh
 ```
 
 > Please notice that, <br>
-> - due to lack of time , test and environment database
-    is same, and affect on each others so for the more accurate tests just run fresh migration 
+> - due to lack of time , test and environment databases
+    are same, and affect on each others so for the more accurate tests just run fresh migration 
 > - you could simply change database data <br>
     just open "database/seeds" directory and feel free to make some changes for better tests 

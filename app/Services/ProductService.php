@@ -32,6 +32,6 @@ class ProductService
 
     public function getAllWithPaginate()
     {
-        return $this->product_repository->getAllWithPaginate();
+        return $this->product_repository->getAllWith(['category']);
     }
 }

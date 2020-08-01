@@ -1,0 +1,273 @@
+swagger: '2.0'
+info:
+  description: Snapp Market
+  version: 1.0.0
+  title: Snapp Market
+  contact:
+    email: mhmd_nz@yahoo.com
+host: 'localhost:8080'
+basePath: /api
+schemes: ['http']
+produces:
+  - application/json
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Users
+      summary: Users login with username/password
+      description: ''
+      operationId: userLogin
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        '200':
+          description: login success
+          schema:
+            $ref: "#/definitions/Token"
+
+  /product/csv:
+    post:
+      tags:
+        - Users
+      summary: send products with csv file
+      description: 'you could simply send products as csv file, donot forget that system will not insert duplicate data, so make sure that your csv file is in right format and uniqu'
+      operationId: productCsv
+      security:
+        - JWT: []
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              products:
+                type: string
+                example: "uploaded file"
+        - in: header
+          name: Authorization
+          type: string
+      responses:
+        '200':
+          description: login success
+          schema:
+            $ref: "#/definitions/CSVResponse"
+
+  /product:
+    get:
+      tags:
+        - Users
+      summary: get all products
+      description: 'you could get all the products with pagination'
+      operationId: product
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: login success
+          schema:
+            $ref: '#/definitions/productPaginate'
+
+  /category:
+    get:
+      tags:
+        - Users
+      summary: get all products by category
+      description: 'you could get all the products with pagination, or just send category id to specific your recieve'
+      operationId: category
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: login success
+          schema:
+            $ref: '#/definitions/CategoryWithProduct'
+
+  /category/id:
+    get:
+      tags:
+        - Users
+      summary: get all products of the specific product
+      description: 'you could get all the products with pagination, or just send category id to specific your recieve'
+      operationId: categoryId
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: login success
+          schema:
+            $ref: '#/definitions/CategoryWithProduct'
+definitions:
+  Token:
+    type: object
+    properties:
+      access_token:
+        type: string
+        example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODA4MFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU5NjMxMzkwOSwiZXhwIjoxNTk2MzE3NTEwLCJuYmYiOjE1OTYzMTM5MTAsImp0aSI6IjNJcU9RdkF4bzNMdlFNc0oiLCJzdWIiOjEsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.jNLO2rB8SuiIwi2e5jPcDrfaIsn_qU0LE53nWfJ78sw
+      token_type:
+        type: string
+        example: bearer
+      expires_in:
+        type: integer
+        example: 3600
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      password:
+        type: "string"
+      email:
+        type: "string"
+        format: "unique"
+  Category:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        example: "sport"
+      creted_at:
+        type: "string"
+        example: "2020-10-10 00:00:00"
+      updated_at:
+        type: "string"
+        format: "2020-10-10 00:00:00"
+  Product:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        example: "sport"
+      price:
+        type: "integer"
+        format: "decimal"
+        example: 10000
+      stock:
+        type: "integer"
+        example: 50
+      category:
+        $ref: '#/definitions/Category'
+      describe:
+        type: string
+        format: "test"
+        example: "excelent product"
+      creted_at:
+        type: "string"
+        example: "2020-10-10 00:00:00"
+        format: "datetime"
+      updated_at:
+        type: "string"
+        example: "2020-10-10 00:00:00"
+        format: "datetime"
+  CSVResponse:
+    type: "object"
+    properties:
+      result:
+        type: boolean
+        example: true
+  productPaginate:
+    type: "object"
+    properties:
+      data:
+        type: object
+        $ref: '#/definitions/Product'
+      current_page:
+        type: integer
+        example: 1
+      first_page_url:
+        type: "string"
+        example: "http://localhost:8080/api/product?page=1"
+      from:
+        type: integer
+        example: 1
+      to:
+        type: integer
+        example: 8
+      last_page:
+        type: integer
+        example: 1
+      last_page_url:
+        type: "string"
+        example: "http://localhost:8080/api/product?page=1"
+      next_page_url:
+        type: "string"
+        example: "http://localhost:8080/api/product?page=1"
+  categoryPaginate:
+    type: "object"
+    properties:
+      data:
+        type: object
+        $ref: '#/definitions/CategoryWithProduct'
+      current_page:
+        type: integer
+        example: 1
+      first_page_url:
+        type: "string"
+        example: "http://localhost:8080/api/product?page=1"
+      from:
+        type: integer
+        example: 1
+      to:
+        type: integer
+        example: 8
+      last_page:
+        type: integer
+        example: 1
+      last_page_url:
+        type: "string"
+        example: "http://localhost:8080/api/product?page=1"
+      next_page_url:
+        type: "string"
+        example: "http://localhost:8080/api/product?page=1"
+  CategoryWithProduct:
+    type: object
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        example: "sport"
+      creted_at:
+        type: "string"
+        example: "2020-10-10 00:00:00"
+      updated_at:
+        type: "string"
+        format: "2020-10-10 00:00:00"
+      products:
+        $ref: '#/definitions/Product'
+securityDefinitions:
+  JWT:
+    type: apiKey
+    name: Authorization
+    in: header
+  
