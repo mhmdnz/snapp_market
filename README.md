@@ -1,61 +1,113 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# SnappMarket
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+The Application is wrriten on Laravel, if you are not familier with the environment please check the link below:
 
-## About Laravel
+[Laravel Installation](https://laravel.com/docs/7.x/installation)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Installation Guid
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Manualy
+  - [Clone project from Git repository](https://github.com/mhmdnz/snapp_market.git)
+  - [Edit ENV file](#Edit-env-File)
+  - [Install Composer Packages](#Install-Composer-Packages)
+  - [Run DB migrations](#Run-DB-migrations)
+  - [Add laravel schedules to your cronjobs](#Add-laravel-schedules-to-your-cronjobs)
+  - [Run Tests](#Run-Tests)
+  
+## Docker
+- [Docker](#Docker-Installation-Guid)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Clone project From Git
 
-## Learning Laravel
+```sh
+$ mkdir snappmarket
+$ cd snappmarket
+$ git clone "https://github.com/mhmdnz/snapp_market.git" .
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Edit env File
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+To run laravel applications you have to define your system configuration for the laravel in .env file
 
-## Laravel Sponsors
+```sh
+$ mv .env.example .env
+$ vim .env
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Install Composer Packages
 
-### Premium Partners
+```sh
+$ composer install
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+### Run DB migrations
 
-## Contributing
+> Do not forget to create your database and give it to the .env file or you will get and Error<br>
+> - If you got any error you could simply use <strong>fresh</strong> parameter<br>
+> - Or if you are not familier with laravel migrations just drop and create your database again
+```sh
+//Create database example
+//login to mysql console then use below command
+$ mysql -u{enter user name here} -p{enter password here}
+$ Create Database snappmarket
+```
+```sh
+$ php artisan migrate --seed
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Add laravel schedules to your cronjobs
 
-## Code of Conduct
+```sh
+$ crontab -e
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+//add folowing line to your crontab, Do not Forget to change the path of your project
 
-## Security Vulnerabilities
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+> this Schedule will run all the commands that I have designed for the project ,<br> For instance ,
+> it will run the addStockCommand which will increase the amount of zero ingredients stock every 15 minutes  
 
-## License
+### Run Tests
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```sh
+//you could run all the tests by running below command in the project root
+$ phpunit
+//or 
+$ ./vendor/bin/phpunit
+```
+
+```sh
+//you could run only one test by using this command
+$ phpunit /address of the test
+```
+
+# Docker Installation Guid
+
+  - [Clone project from Git repository](https://github.com/mhmdnz/snapp_market.git)
+  - [Run Prepration File](#Run-Prepration-File)
+  
+```sh
+//it will bring project up
+$ docker-compose up --build -d
+$ docker exec -it php sh /tmp/Prepration.sh
+```
+> Check the result : localhost:8080
+## Some helpful commands
+
+```sh
+//to Run Tests
+$ docker exec -it php sh /tmp/RunTests.sh
+
+//to get fresh migration
+$ docker exec -it php sh /tmp/FreshMigrations.sh
+
+//to run composer install
+$ docker exec -it php sh /tmp/ComposerInstall.sh
+```
+
+> Please notice that, <br>
+> - due to lack of time , test and environment database
+    is same, and affect on each others so for the more accurate tests just run fresh migration 
+> - you could simply change database data <br>
+    just open "database/seeds" directory and feel free to make some changes for better tests 
