@@ -22,4 +22,12 @@ class CategoryService
     {
         return $this->category_repository->getByName($name);
     }
+
+    public function getAllProducts($category_id)
+    {
+        if ($category_id)
+            return $this->category_repository->getWith($category_id, ['products']);
+
+        return $this->category_repository->getAllWith(['products']);
+    }
 }

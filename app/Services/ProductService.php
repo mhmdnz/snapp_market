@@ -11,6 +11,7 @@ class ProductService
 {
     protected $product_repository;
     protected $category_service;
+
     public function __construct(ProductRepository $product_repository, CategoryService $category_service)
     {
         $this->product_repository = $product_repository;
@@ -27,5 +28,10 @@ class ProductService
         $product->stock = $data['stock'];
         $product->describe = $data['describe'];
         $product->save();
+    }
+
+    public function getAllWithPaginate()
+    {
+        return $this->product_repository->getAllWithPaginate();
     }
 }

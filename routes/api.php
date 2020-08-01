@@ -33,3 +33,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth')->post('/product/csv', 'ProductController@saveCsv');
+
+Route::get('/product', 'ProductController@get');
+
+Route::get('/category/{category_id?}', 'CategoryController@get');

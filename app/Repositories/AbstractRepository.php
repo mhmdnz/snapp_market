@@ -13,12 +13,22 @@ class AbstractRepository
 
     public function getAll()
     {
-        return $this->model->all();
+        return $this->model->paginate(15);
+    }
+
+    public function getAllWith(array $relations)
+    {
+        return $this->model->with(['products'])->paginate(15);
     }
 
     public function get($id)
     {
         return $this->model->find($id);
+    }
+
+    public function getAllWithPaginate()
+    {
+        return $this->model->paginate(15);
     }
 
     public function getWith($id, array $relations)
