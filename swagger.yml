@@ -40,7 +40,7 @@ paths:
   /product/csv:
     post:
       tags:
-        - Users
+        - Product
       summary: send products with csv file
       description: 'you could simply send products as csv file, donot forget that system will not insert duplicate data, so make sure that your csv file is in right format and uniqu'
       operationId: productCsv
@@ -70,7 +70,7 @@ paths:
   /product:
     get:
       tags:
-        - Users
+        - Product
       summary: get all products
       description: 'you could get all the products with pagination'
       operationId: product
@@ -87,7 +87,7 @@ paths:
   /category:
     get:
       tags:
-        - Users
+        - Category
       summary: get all products by category
       description: 'you could get all the products with pagination, or just send category id to specific your recieve'
       operationId: category
@@ -104,7 +104,7 @@ paths:
   /category/id:
     get:
       tags:
-        - Users
+        - Category
       summary: get all products of the specific product
       description: 'you could get all the products with pagination, or just send category id to specific your recieve'
       operationId: categoryId
@@ -270,4 +270,3 @@ securityDefinitions:
     type: apiKey
     name: Authorization
     in: header
-  

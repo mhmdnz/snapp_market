@@ -3,8 +3,6 @@
 
 namespace App\Helpers;
 
-
-use App\Http\Requests\GetCsvRequest;
 use App\Services\ProductService;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +14,7 @@ class CsvProductsHelper
         $this->product_service = $product_service;
     }
 
-    public function save(GetCsvRequest $request)
+    public function save($request)
     {
         $data = $this->getCollection($request);
         try {
@@ -25,10 +23,8 @@ class CsvProductsHelper
                     $this->product_service->saveWithCategoryName($product);
                 });
             });
-
             return true;
-        } catch (\PDOException $exception){
-
+        } catch (\Throwable $exception){
             return false;
         }
 
